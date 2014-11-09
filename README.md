@@ -71,7 +71,7 @@ If provided an input `array`, the `array` is mutated. If mutation is undesired,
 var data = [ 0, 45, 90, 135, 180 ],
 	copy = data.slice();
 
-deg2rad( copy, -2 );
+deg2rad( copy );
 ```
 
 If provided an empty `array`, the function returns `null`.
