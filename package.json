@@ -1,6 +1,6 @@
 {
   "name": "compute-deg2rad",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Converts degrees to radians.",
   "author": {
     "name": "Athan Reines",
