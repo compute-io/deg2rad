@@ -19,18 +19,41 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 To use the module,
 
 ``` javascript
-var foo = require( 'compute-deg2rad' );
+var deg2rad = require( 'compute-deg2rad' );
 ```
 
-#### foo( arr )
+#### deg2rad( x )
 
-What does this function do?
+Converts degrees to radians. `x` may be either a numeric `array` or a single numeric value.
+
+``` javascript
+// Single value:
+var rad = deg2rad( 90 );
+// returns pi/2
+
+// Array of values:
+var degs = [ 0, 45, 90, 135, 180 ];
+
+deg2rad( degs );
+// returns [ 0, pi/4, pi/2, 3pi/4, pi ]
+```
 
 
 ## Examples
 
 ``` javascript
-var foo = require( 'compute-deg2rad' );
+var deg2rad = require( 'compute-deg2rad' );
+
+// Simulate some data...
+var data = new Array( 100 );
+
+for ( var i = 0; i < data.length; i++ ) {
+	data[ i ] = Math.random()*360;
+}
+
+deg2rad( data );
+
+console.log( data.join( '\n' ) );
 ```
 
 To run the example code from the top-level application directory,
@@ -38,6 +61,20 @@ To run the example code from the top-level application directory,
 ``` bash
 $ node ./examples/index.js
 ```
+
+
+## Notes
+
+If provided an input `array`, the `array` is mutated. If mutation is undesired,
+
+``` javascript
+var data = [ 0, 45, 90, 135, 180 ],
+	copy = data.slice();
+
+deg2rad( copy, -2 );
+```
+
+If provided an empty `array`, the function returns `null`.
 
 
 ## Tests
