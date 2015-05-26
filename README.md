@@ -22,7 +22,7 @@ To use the module,
 var deg2rad = require( 'compute-deg2rad' );
 ```
 
-#### deg2rad( x )
+#### deg2rad( x[, options] )
 
 Converts degrees to radians. `x` may be either a numeric `array` or a single numeric value.
 
@@ -38,6 +38,47 @@ deg2rad( degs );
 // returns [ 0, pi/4, pi/2, 3pi/4, pi ]
 ```
 
+The function accepts two `options`:
+
+*  __copy__: `boolean` indicating whether to return a new `array` containing the converted radians. Default: `true`.
+*  __accessor__: accessor `function` for accessing numerical values in object `arrays`.
+
+To mutate the input `array` (e.g. when input values can be discarded or when optimizing memory usage), set the `copy` option to `false`.
+
+``` javascript
+var degs = [ 0, 45, 90, 135, 180 ];
+
+var values = deg2rad( degs, {
+	'copy': false
+});
+// eturns [ 0, pi/4, pi/2, 3pi/4, pi ]
+
+console.log( data === values );
+//returns true
+```
+
+For non-numeric `arrays`, provide an accessor `function` for accessing numeric `array` values.
+
+``` javascript
+var arr = [
+	{'x':0},
+	{'x':45},
+	{'x':90},
+	{'x':135},
+	{'x':180}
+];
+
+function getValue( d ) {
+	return d.x;
+}
+
+var values = deg2rad( arr, {
+	'accessor': getValue
+});
+// eturns [ 0, pi/4, pi/2, 3pi/4, pi ]
+```
+
+Notes: If provided an empty `array`, the function returns `null`.
 
 ## Examples
 
@@ -63,25 +104,11 @@ $ node ./examples/index.js
 ```
 
 
-## Notes
-
-If provided an input `array`, the `array` is mutated. If mutation is undesired,
-
-``` javascript
-var data = [ 0, 45, 90, 135, 180 ],
-	copy = data.slice();
-
-deg2rad( copy );
-```
-
-If provided an empty `array`, the function returns `null`.
-
-
 ## Tests
 
 ### Unit
 
-Unit tests use the [Mocha](http://visionmedia.github.io/mocha) test framework with [Chai](http://chaijs.com) assertions. To run the tests, execute the following command in the top-level application directory:
+Unit tests use the [Mocha](http://mochajs.org) test framework with [Chai](http://chaijs.com) assertions. To run the tests, execute the following command in the top-level application directory:
 
 ``` bash
 $ make test
@@ -105,15 +132,15 @@ $ make view-cov
 ```
 
 
+---
 ## License
 
-[MIT license](http://opensource.org/licenses/MIT). 
+[MIT license](http://opensource.org/licenses/MIT).
 
 
----
 ## Copyright
 
-Copyright &copy; 2014. Athan Reines.
+Copyright &copy; 2014-2015. The Compute.io Authors.
 
 
 [npm-image]: http://img.shields.io/npm/v/compute-deg2rad.svg
